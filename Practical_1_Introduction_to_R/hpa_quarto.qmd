@@ -1,0 +1,18 @@
+---
+title: "MB1A Practical 1"
+author: "Huang Xihao"
+---
+Comparison of number of genes in regionally elevated expression in forebrain of human, pig and mouse.
+```{r}
+total_elevated_human <- sum(180,83,57,110)
+print(paste("Number of genes in regionally elevated expression in forebrain of humans is:" , total_elevated_human))
+```
+```{r}
+total_elevated_pig <- sum(109,157,31,45)
+print(paste("Number of genes in regionally elevated expression in forebrain of pigs is:" , total_elevated_pig))
+```
+```{r}
+total_elevated_mouse <- sum(55,185,60,98)
+print(paste("Number of genes in regionally elevated expression in forebrain of mice is:" , total_elevated_mouse))
+```
+Humans have the highest number of genes at 430
