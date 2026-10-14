@@ -1,0 +1,26 @@
+---
+title: "MB1A Practical 1"
+author: "Huang Xihao"
+---
+```{r}
+library(tidyverse)
+library(gt)
+```
+
+```{r}
+Lead_exposure_in_children <- read_csv("data/ukhsa-chart-download.csv")
+gt(head(Lead_exposure_in_children))
+```
+This dataset explores the rates of lead exposure in children in the UK
+```{r}
+ggplot(Lead_exposure_in_children, aes(
+  x = year,
+  y = metric_value
+)) +
+  geom_line() +
+  scale_x_continuous(n.breaks=6) +
+xlab("year") +
+  ylab("number of cases") +
+  ggtitle("Rate of Lead Exposure in Children in the UK")
+```
+
