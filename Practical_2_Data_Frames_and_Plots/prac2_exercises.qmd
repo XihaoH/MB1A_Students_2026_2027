@@ -1,0 +1,38 @@
+---
+title: "prac2_exercises"
+editor: visual
+---
+
+```{r}
+y <- 12
+print(y == 7)
+print(y < 15)
+print(y > 20)
+print(y <= 12)
+```
+
+```{r, echo=FALSE}
+library(gt)
+library(tidyverse)
+library(maps)
+breedingsiteloc <- read_csv("data/breeding_site_locations.csv")
+migratory_connectivity_dataset <- read_csv("data/migratory_connectivity_dataset.csv")
+bird_breeding_selected <- breedingsiteloc |>
+  select(Site, Longitude, Latitude) |>
+  distinct() |>
+  rename(Breeding_Longitude = Longitude, Breeding_Latitude = Latitude)
+bird_migration_selected <- migratory_connectivity_dataset|>
+  select(Site, winterLongitude, winterLatitude, pslon, pslat, iblon, iblat, awestlon, awestlat) |> distinct() |>
+  rename(Winter_Longitude = winterLongitude, Winter_Latitude = winterLatitude, Stopover_Longitude = pslon, Stopover_Latitude = pslat, Iberian_Longitude = iblon, Iberian_Latitude = iblat, Westmost_Longitude = awestlon, Westmost_Latitude = awestlat)
+```
+
+```{r}
+bird_breeding_exc <- bird_breeding_selected |> filter(Site != "Spain")
+gt(bird_breeding_exc)
+
+```
+
+```{r}
+bird_migration_exc <- bird_migration_selected |> filter(Site != "Spain")
+gt(bird_migration_exc)
+```
