@@ -3,6 +3,11 @@ title: "MB1A Practical 1"
 author: "Huang Xihao"
 ---
 ```{r}
+library(tidyverse)
+library(gt)
+```
+
+```{r}
 round(3.1415926)
 ```
 ```{r}
@@ -31,5 +36,26 @@ num_cells_before_1 <- 5415
 num_cells_before_2 <- 8123
 num_cells_after_1 <- 1432
 num_cells_after_2 <- 7543
+```
+```{r}
+cell_ID <- c(cell_ID_1,cell_ID_2)
+treated <- c(treated_1,treated_2)
+num_cells_before <- c(num_cells_before_1,num_cells_before_2)
+num_cells_after <- c(num_cells_after_1,num_cells_after_2)
+```
+
+```{r}
+all_my_pets <- c("dog", "horse", "guinea pig", "chicken", "cat")
+good_for_frying <- all_my_pets[4]
+print(good_for_frying)
+```
+```{r}
+radiation_experiment_data <- tibble(
+  Cell_ID = cell_ID,
+  Treated = treated,
+  num_cells_before = num_cells_before,
+  num_cells_after = num_cells_after,
+)
+gt(radiation_experiment_data)
 ```
 
