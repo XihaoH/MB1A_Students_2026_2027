@@ -1,0 +1,44 @@
+---
+title: "Prac3 Exercises"
+editor: visual
+---
+
+```{r}
+library(tidyverse)
+library(gt)
+set.seed(42)
+```
+
+```{r}
+hpv_data<-read_csv("data/cm_all_ages.csv")
+gt(hpv_data)
+```
+
+```{r}
+NormalHPVPos<-hpv_data|>filter(Cytology=="Normal",HPV_Status=="HPV+")|>pull(N_individuals)
+
+AbnormalHPVPos<-hpv_data|>filter(Cytology=="Abnormal",HPV_Status=="HPV+")|>pull(N_individuals)
+
+NormalHPVNeg<-hpv_data|>filter(Cytology=="Normal",HPV_Status=="HPV-")|>pull(N_individuals)
+AbnormalHPVNeg<-hpv_data|>filter(Cytology=="Abnormal",HPV_Status=="HPV-")|>pull(N_individuals)
+
+prop_abnormal_given_hpv<-AbnormalHPVPos/(NormalHPVPos+AbnormalHPVPos)
+
+prop_abnormal_given_no_hpv<-AbnormalHPVNeg/(NormalHPVNeg+AbnormalHPVNeg)
+
+prop_hpv_given_abnormal<-AbnormalHPVPos/(AbnormalHPVPos+AbnormalHPVNeg)
+
+prop_no_hpv_given_normal<-NormalHPVNeg/(NormalHPVNeg+NormalHPVPos)
+
+print(prop_abnormal_given_hpv)
+
+print(prop_abnormal_given_no_hpv)
+
+print(prop_hpv_given_abnormal)
+
+print(prop_no_hpv_given_normal)
+```
+
+```{r}
+prop_hpv_given_normal <- 1 - prop_no_hpv_given_normal
+```
