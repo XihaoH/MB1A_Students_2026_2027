@@ -1,0 +1,55 @@
+---
+title: "Prac3 Worked Example"
+editor: visual
+---
+
+```{r}
+library(tidyverse)
+library(gt)
+library(cowsay)
+set.seed(42)
+```
+
+```{r}
+heist_result<-c("success","failure")
+heist_prob<-c(0.3,0.7)
+heist<-sample(heist_result,
+              size=150,
+              replace=TRUE,
+              prob=heist_prob)
+n_successes<-sum(heist=="success")
+say(paste("I was successful", n_successes, "times!"), by = "squirrel")
+```
+
+```{r}
+combined_successes <- c()
+for (i in seq_len(1000)) {
+  is_success <- sample(c("SUCCESS", "FAILURE"),
+                       size = 150,
+                       replace = TRUE,
+                       prob = c(0.3, 0.7)
+  )
+  n_successes <- sum(is_success == "SUCCESS")
+  combined_successes <- c(combined_successes, n_successes)
+}
+print(combined_successes)
+```
+
+```{r}
+df_squirrels <- tibble("N_Successful_Heists" = combined_successes)
+gt(head(df_squirrels))
+```
+
+```{r}
+ggplot(
+  df_squirrels,
+  aes(
+    x = N_Successful_Heists
+  )
+) +
+  geom_bar() +
+  ggtitle("Number of Successful Heists per Squirrel - Simulated") +
+  xlab("Number of successful heists") +
+  ylab("Number of squirrels") +
+  theme_minimal()
+```
