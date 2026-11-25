@@ -1,0 +1,41 @@
+---
+title: "Practical 3"
+editor: visual
+---
+
+```{r}
+set.seed(42)
+```
+
+```{r}
+for (i in seq_len(20)) {
+  cubed <- i^3
+  print(cubed)
+}
+for (i in seq_len(5)) {
+  random<-paste(sample(letters, 5, replace = TRUE), collapse="")
+  print(random)
+}
+```
+
+```{r}
+library(tidyverse)
+library(gt)
+set.seed(42)
+```
+
+```{r}
+numbers<-c(1,2,3,4,5)
+breakfast <- c("eggs", "bacon", "sausages", "toast","black pudding","hash brown", "waffles", "pancakes", "beans")
+break_df<-tibble()
+for (i in seq_len(10)) {
+  item <- sample(breakfast, size = 1)
+  num <- sample(numbers, size = 1)
+  row <- tibble(
+    item = item,
+    count = num
+  )
+  break_df <- bind_rows(break_df, row)
+}
+gt(break_df)
+```
