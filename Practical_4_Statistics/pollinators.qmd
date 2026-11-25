@@ -1,0 +1,66 @@
+---
+title: "Prac4 Exercises"
+editor: visual
+---
+
+```{r}
+insect_counts<-read_csv("data/insect_counts.csv")
+flower_counts<-read_csv("data/flower_counts.csv")
+site_df<-read_csv("data/site_metadata.csv")
+site_count <- nrow(site_df)
+print(site_count)
+total_insect_obs <- insect_counts |>
+  pull(n_observed) |>
+  sum()
+print(total_insect_obs)
+by_observation<-insect_counts|>arrange(desc(n_observed))
+gt(by_observation)
+```
+
+```{r}
+H_tumulorum<-insect_counts|>filter(species=="Halictus tumulorum")|>mutate(detected=n_observed>0)
+ht_df<-inner_join(H_tumulorum,site_df)
+write_csv(ht_df, "output/ht_df.csv")
+
+```
+
+```{r}
+ht_temp_df <- ht_df |>
+  select(x1km_square, detected, min_temp_coldest_month)
+gt(head(ht_temp_df))
+ht_temp_summ <- ht_temp_df |>
+  group_by(detected) |>
+  summarise(
+    mean = mean(min_temp_coldest_month),
+    sd = sd(min_temp_coldest_month),
+    count = n()
+  )
+
+# Separate present and absent sites
+present <- ht_temp_summ |>
+  filter(detected == TRUE)
+
+absent <- ht_temp_summ |>
+  filter(detected == FALSE)
+
+gt(ht_temp_summ)
+gt(present)
+gt(absent)
+```
+
+```{r}
+ttest_ht_temp<-t.test(min_temp_coldest_month ~ detected,data = ht_temp_df, var.equal = TRUE)
+print(ttest_ht_temp)
+```
+
+```{r}
+lm_ht<-lm(min_temp_coldest_month ~ detected,data = ht_temp_df)
+summ_lm_ht<-summary(lm_ht)
+print(summ_lm_ht)
+```
+
+```{r}
+anova_lm <- anova(lm_ht)
+anova_lm
+#Finished Part 2 of Practical 4
+```
